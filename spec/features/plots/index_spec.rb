@@ -16,7 +16,7 @@ RSpec.describe 'The plots index page' do
   end
 
   it "lists all the plot numbers" do
-    visit '/plots'
+    visit plots_path
 
     within("#plot-#{@plot1.id}") do
       expect(page).to have_content(@plot1.number)
@@ -40,6 +40,24 @@ RSpec.describe 'The plots index page' do
       expect(page).to have_content("Plants:")
       expect(page).to_not have_content(@plant1.name)
       expect(page).to_not have_content(@plant4.name)
+    end
+  end
+
+  it "has a link to delete a plant from a plot" do
+    visit plots_path
+
+    within("#plot-#{@plot1.id}") do
+      expect(page).to have_content(@plant1.name)
+      expect(page).to have_content(@plant2.name)
+      expect(page).to have_content(@plant3.name)
+
+      expect(page).to have_button("Remove #{@plant1.name}")
+      click_button "Remove #{@plant1.name}"
+      expect(current_path).to eq(plots_path)
+
+      expect(page).to_not have_content(@plant1.name)
+      expect(page).to have_content(@plant2.name)
+      expect(page).to have_content(@plant3.name)
     end
   end
 end

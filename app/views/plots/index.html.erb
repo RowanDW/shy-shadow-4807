@@ -6,6 +6,7 @@
     <h4>Plants:</h4>
     <% plot.plants.each do |plant| %>
       <p>- <%= plant.name %></p>
+      <%= button_to "Remove #{plant.name}", plant_location_path(PlantLocation.get_id(plot, plant)), method: :delete %>
     <% end %>
   </div>
 <% end %>
