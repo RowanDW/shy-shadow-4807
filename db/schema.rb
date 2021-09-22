@@ -15,40 +15,9 @@ ActiveRecord::Schema.define(version: 2021_09_22_151455) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "chefs", force: :cascade do |t|
-    t.string "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "dish_ingredients", force: :cascade do |t|
-    t.bigint "dish_id"
-    t.bigint "ingredient_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["dish_id"], name: "index_dish_ingredients_on_dish_id"
-    t.index ["ingredient_id"], name: "index_dish_ingredients_on_ingredient_id"
-  end
-
-  create_table "dishes", force: :cascade do |t|
-    t.string "name"
-    t.string "description"
-    t.bigint "chef_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["chef_id"], name: "index_dishes_on_chef_id"
-  end
-
   create_table "gardens", force: :cascade do |t|
     t.string "name"
     t.boolean "organic"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "ingredients", force: :cascade do |t|
-    t.string "name"
-    t.integer "calories"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -80,9 +49,6 @@ ActiveRecord::Schema.define(version: 2021_09_22_151455) do
     t.index ["garden_id"], name: "index_plots_on_garden_id"
   end
 
-  add_foreign_key "dish_ingredients", "dishes"
-  add_foreign_key "dish_ingredients", "ingredients"
-  add_foreign_key "dishes", "chefs"
   add_foreign_key "plant_locations", "plants"
   add_foreign_key "plant_locations", "plots"
   add_foreign_key "plots", "gardens"
