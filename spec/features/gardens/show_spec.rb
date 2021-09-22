@@ -1,10 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Garden do
-  describe 'relationships' do
-    it { should have_many(:plots) }
-  end
-
+RSpec.describe 'The garden show page' do
   before :each do
     @garden1 = Garden.create!(name: "Commmunity Garden", organic: true)
     @plot1 = @garden1.plots.create!(number: 1, size: "Medium", direction: "North")
@@ -32,12 +28,22 @@ RSpec.describe Garden do
     @pl_loc5 = PlantLocation.create!(plot: @plot4, plant: @plant5)
   end
 
-  describe 'instance methods' do
-    describe '.unique_plants_under_100' do
-      it "returns all unique plants in a garden under 100 days and " do
-        expect(@garden1.unique_plants_under_100.pluck(:name)).to eq([@plant3.name, @plant1.name])
-        expect(@garden2.unique_plants_under_100.pluck(:name)).to eq([@plant4.name, @plant3.name])
-      end
+  it "Shows all the gardens plants distinct " do
+    visit garden_path(@garden1)
+
+    expect(page).to have_content(@garden1.name)
+
+    within('#plants') do
+      expect(page).to have_content("Plants:")
+      # On 2 plots in same garden
+      expect(page).to have_content(@plant1.name, count: 1)
+      # In both gardens
+      expect(page).to have_content(@plant3.name)
+      # More than 100 days
+      expect(page).to_not have_content(@plant2.name)
+      # In a different garden
+      expect(page).to_not have_content(@plant4.name)
+      expect(page).to_not have_content(@plant5.name)
     end
   end
 end
