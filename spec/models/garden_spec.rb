@@ -34,7 +34,7 @@ RSpec.describe Garden do
 
   describe 'instance methods' do
     describe '.unique_plants_under_100' do
-      it "returns all unique plants in a garden under 100 days and " do
+      it "returns all unique plants in a garden under 100 days" do
         expect(@garden1.unique_plants_under_100.pluck(:name)).to eq([@plant3.name, @plant1.name])
         expect(@garden2.unique_plants_under_100.pluck(:name)).to eq([@plant4.name, @plant3.name])
       end

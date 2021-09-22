@@ -3,6 +3,6 @@
 <div id="plants">
   <h3>Plants:</h3>
   <% @garden.unique_plants_under_100.each do |plant| %>
-    <p><%= plant.name %></p>
+    <p><%= plant.name %>- <%= plant.appearance_count %> appearance(s)</p>
   <% end %>
 </div>
